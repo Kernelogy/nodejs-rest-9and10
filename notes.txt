@@ -1,0 +1,26 @@
+Connecting the Mondodb to our project
+    1. install the mongoose library
+        npm install mongoose
+    2. Connect the mongodb using mongoose library
+        mongoose.connect(MONGODB_URL)
+        .then(()=>{
+            console.log(`${MONGODB_URL} connection Successfull...`)
+        })
+        .catch((err)=>{
+            console.error("Error in connecting to mongodb", err.message)
+        })
+Creating a Table and doing the CURD Operation
+    1. Define a Model (see...UserModel.js)
+        a) Define a schema using new mongoose.Schema class
+        b) Create a Model using mongoose.model function
+        c) export the model
+Create a Controller (see...UserController.js)
+    1. Import the model
+    2. export the controller function 
+    3. create the model 
+    4. CURD Operation
+Link the controller to route/path 
+    1. Import the controller in the main file (app.js, server.js)
+            const UserController = require("./controllers/UserController")  
+    2. app.method("url", controller.function)
+            app.post("/user/insert", UserController.insert) 
