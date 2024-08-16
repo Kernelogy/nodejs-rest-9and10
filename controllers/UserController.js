@@ -26,6 +26,26 @@ exports.list = [(req,res)=>{
     })
 }]
 
+exports.login = [(req, res)=>{
+    UserModel.findOne({
+        username: req.body.username, 
+        password: req.body.password
+    })
+    .then((user)=>{
+        /*
+        let userFound = false
+        if(user){ // True => User data is in database 
+            userFound = true
+        }
+        res.send(userFound)
+        */
+       user ? res.send(true) : res.send(false)
+    })
+    .catch((err)=>{
+        res.send(err)
+    })
+}]
+
 
 
 
