@@ -13,6 +13,8 @@ const express = require("express")
 // Create an express app
 // Initiate the express app
 const app = express()
+
+
 //Cofigure method and url fot http request & reponse
 app.use(express.json())
 app.use(express.urlencoded())
