@@ -46,6 +46,16 @@ exports.login = [(req, res)=>{
     })
 }]
 
+exports.delete = [(req, res)=>{
+    UserModel.deleteOne({_id: req.params.id})
+    .then((data)=>{
+        res.send(data)
+    })
+    .catch((err)=>{
+        res.send(err)
+    })
+}]
+
 
 
 
