@@ -1,21 +1,32 @@
 const UserModel = require("../models/UserModel")
 const AddressModel = require("../models/AddressModel")
 const ContactModel = require("../models/ContactModel")
+const {body, validationResult} = require("express-validator")
+const UserValidator = require("../validators/UserValidator")
 
-exports.insert = [(req, res)=>{
-    const User = new UserModel({
-        username: req.body.username,
-        email: req.body.email,
-        contact: req.body.contact, 
-        password: req.body.password
-    })
-    User.save()
-    .then((savedObject)=>{
-        res.send(savedObject)
-    })
-    .catch((err)=>{
-        res.send(err)
-    })
+exports.insert = [
+    UserValidator.insert,
+    (req, res)=>{
+        const errors = validationResult(req)
+        // console.log(errors.array())
+        if(errors.isEmpty()){
+            const User = new UserModel({
+                username: req.body.username,
+                email: req.body.email,
+                contact: req.body.contact, 
+                password: req.body.password
+            })
+            User.save()
+            .then((savedObject)=>{
+                res.send(savedObject)
+            })
+            .catch((err)=>{
+                res.send(err)
+            })
+        }else{
+            res.send(errors.array())
+        }
+
 }]
 
 exports.insertWithContacts = [async (req, res)=>{
@@ -91,8 +102,27 @@ exports.list = [(req,res)=>{
         res.send(users)
     })
     .catch((err)=>{
+        
         res.send(err)
     })
+}]
+
+exports.listPage = [(req, res)=>{
+        // Define page and limit per page
+        let page = parseInt(req.query.page) || 1;
+
+        const perPage = 2; // Display 2 users per page
+   
+        // Calculate skip based on page
+        const skip = page > 1 ? (page - 1) * perPage : 0;
+    
+        // Set the limit to perPage
+        const limit = perPage;
+    
+        UserModel.find().skip(skip).limit(limit)
+        .then((users)=>{
+            res.send(users)
+        })
 }]
 
 exports.login = [(req, res)=>{

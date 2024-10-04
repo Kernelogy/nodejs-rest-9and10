@@ -62,7 +62,9 @@ app.use(router)
 // Method 2
 app.use(require("./routes/UserRoute"))
 app.use(require("./routes/ProductRoute"))
-
+app.use(require("./routes/TagRoute"))
+app.use(require("./routes/PostRoute"))
+app.use(require("./routes/AuthRoute"))
 
 app.listen(8080, () => {
     console.log("Server Listening on Port 8080")

@@ -44,3 +44,44 @@ exports.list = [(req, res)=>{
     res.send(err)
   })
 }]
+
+exports.findGreaterByPrice = [(req, res)=>{
+  ProductModel.find({
+    price: { $gt: req.params.price}
+  })
+  .then((products)=>{
+    res.send(products)
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
+}]
+
+exports.findLesserByPrice = [(req, res)=>{
+  ProductModel.find({
+    price: { $lt: req.params.price}
+  })
+  .then((products)=>{
+    res.send(products)
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
+}]
+
+exports.findRangeByPrice = [(req, res)=>{
+  ProductModel.find({
+    $and: {
+      price: {
+        $gt: req.params.start,
+        $lt: req.params.end
+      }
+    }
+  })
+  .then((products)=>{
+    res.send(products)
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
+}]  
